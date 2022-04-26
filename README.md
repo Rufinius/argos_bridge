@@ -31,7 +31,12 @@ suitable value if necessary:
     export ARGOS_PLUGIN_PATH=$ARGOS_PLUGIN_PATH:$HOME/catkin_ws/devel/lib
     
     For me:
+    cd ~/argos_ws/src/argos_bridge/plugin/argos_ros_bot/
+    ln -s /opt/ros/noetic/lib ros_lib
+    
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/argos3
+    export ARGOS_PLUGIN_PATH=~/argos_ws/src/argos_bridge/plugin/argos_ros_bot/ros_lib
+    export ARGOS_PLUGIN_PATH=$ARGOS_PLUGIN_PATH:~/argos_ws/devel/lib
 
 Of course, you had better check that all of these paths make sense.
 
