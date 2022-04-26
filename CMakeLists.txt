@@ -104,8 +104,8 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES argos_bridge
-  CATKIN_DEPENDS roscpp std_msgs
-  DEPENDS message_runtime 
+  CATKIN_DEPENDS roscpp std_msgs message_runtime
+#  DEPENDS message_runtime
 )
 
 ###########

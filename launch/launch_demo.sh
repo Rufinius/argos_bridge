@@ -7,7 +7,8 @@
 # The number of robots.  This should match the 'quantity' value in the argos world file (e.g. argos_worlds/demo.argos).
 n=3
 
-LAUNCH_FILE=/tmp/argos_bridge.launch
+#LAUNCH_FILE=/tmp/argos_bridge.launch
+LAUNCH_FILE=argos_bridge.launch
 
 echo "<launch>" > $LAUNCH_FILE
 
@@ -19,4 +20,4 @@ for ((i=0; i<n; i++)); do
 done >> $LAUNCH_FILE
 echo -e "</launch>" >> $LAUNCH_FILE
 
-roslaunch $LAUNCH_FILE
+#roslaunch $LAUNCH_FILE
