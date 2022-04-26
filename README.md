@@ -31,6 +31,7 @@ suitable value if necessary:
     export ARGOS_PLUGIN_PATH=$ARGOS_PLUGIN_PATH:$HOME/catkin_ws/devel/lib
     
     For me:
+    !!! not completely sure whether these steps are needed !!!
     cd ~/argos_ws/src/argos_bridge/plugin/argos_ros_bot/
     ln -s /opt/ros/noetic/lib ros_lib
     
