@@ -29,6 +29,9 @@ suitable value if necessary:
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/argos3
     export ARGOS_PLUGIN_PATH=$HOME/catkin_ws/src/argos_bridge/ros_lib_links
     export ARGOS_PLUGIN_PATH=$ARGOS_PLUGIN_PATH:$HOME/catkin_ws/devel/lib
+    
+    For me:
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/argos3
 
 Of course, you had better check that all of these paths make sense.
 
