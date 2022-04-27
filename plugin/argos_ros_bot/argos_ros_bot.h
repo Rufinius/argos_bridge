@@ -14,6 +14,8 @@
 #include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_proximity_sensor.h>
 #include <argos3/plugins/robots/generic/control_interface/ci_colored_blob_omnidirectional_camera_sensor.h>
 //#include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_gripper_actuator.h>
+#include <argos3/plugins/robots/generic/control_interface/ci_positioning_sensor.h>
+#include <argos3/plugins/robots/foot-bot/control_interface/ci_footbot_distance_scanner_sensor.h>
 
 #include <ros/ros.h>
 #include <string>
@@ -75,6 +77,8 @@ private:
   CCI_DifferentialSteeringActuator* m_pcWheels;
   CCI_FootBotProximitySensor* m_pcProximity;
   CCI_ColoredBlobOmnidirectionalCameraSensor* m_pcOmniCam;
+  CCI_PositioningSensor* m_pcPosition;
+  CCI_FootBotDistanceScannerSensor* m_pcDistance;
 //  CCI_FootBotGripperActuator* m_pcGripper;
 
   // The following constant values were copied from the argos source tree from
@@ -112,6 +116,10 @@ private:
 
   // Subscriber for cmd_vel (Twist message) topic.
   ros::Subscriber cmdVelSub;
+
+  // Publisher
+  ros::Publisher positionPub;
+  ros::Publisher distancePub;
 
   // Subscriber for gripper (Bool message) topic.
 //  ros::Subscriber gripperSub;

@@ -4,6 +4,8 @@
 #include "argos_bridge/Proximity.h"
 #include "argos_bridge/ProximityList.h"
 
+#include <std_msgs/Float32MultiArray.h>
+
 /* Include the controller definition */
 #include "argos_ros_bot.h"
 /* Function definitions for XML parsing */
@@ -37,6 +39,8 @@ CArgosRosBot::CArgosRosBot() :
   m_pcWheels(NULL),
   m_pcProximity(NULL),
   m_pcOmniCam(NULL),
+  m_pcPosition(NULL),
+  m_pcDistance(NULL),
 //  m_pcGripper(NULL),
   stopWithoutSubscriberCount(10),
   stepsSinceCallback(0),
@@ -48,11 +52,15 @@ CArgosRosBot::CArgosRosBot() :
 
 void CArgosRosBot::Init(TConfigurationNode& t_node) {
   // Create the topics to publish
-  stringstream puckListTopic, proximityTopic;
+  stringstream puckListTopic, proximityTopic, positionTopic, distanceTopic;
   puckListTopic << "/" << GetId() << "/puck_list";
   proximityTopic << "/" << GetId() << "/proximity";
+  positionTopic << "/" << GetId() << "/position";
+  distanceTopic << "/" << GetId() << "/distance";
   puckListPub = nodeHandle->advertise<PuckList>(puckListTopic.str(), 1);
   proximityPub = nodeHandle->advertise<ProximityList>(proximityTopic.str(), 1);
+  positionPub = nodeHandle->advertise<std_msgs::Float32MultiArray>(positionTopic.str(), 1);
+  distancePub = nodeHandle->advertise<std_msgs::Float32MultiArray>(distanceTopic.str(), 1);
 
   // Create the subscribers
   stringstream cmdVelTopic;//, gripperTopic;
@@ -65,6 +73,7 @@ void CArgosRosBot::Init(TConfigurationNode& t_node) {
   m_pcWheels = GetActuator<CCI_DifferentialSteeringActuator>("differential_steering");
   m_pcProximity = GetSensor<CCI_FootBotProximitySensor>("footbot_proximity");
   m_pcOmniCam = GetSensor<CCI_ColoredBlobOmnidirectionalCameraSensor>("colored_blob_omnidirectional_camera");
+  m_pcPosition = GetSensor<CCI_PositioningSensor>("positioning");
 //  m_pcGripper = GetActuator<CCI_FootBotGripperActuator>("footbot_gripper");
 
   m_pcOmniCam->Enable();
@@ -119,6 +128,27 @@ void CArgosRosBot::ControlStep() {
   }
 
   proximityPub.publish(proxList);
+
+  const CCI_PositioningSensor::SReading& posReads = m_pcPosition->GetReading();
+  CVector3 pos = posReads.Position;
+  std_msgs::Float32MultiArray msg;
+  msg.data.push_back(pos.GetX());
+  msg.data.push_back(pos.GetY());
+  msg.data.push_back(pos.GetZ());
+
+  positionPub.publish(msg);
+
+  /*
+  const CCI_FootBotDistanceScannerSensor::TReadingsMap& distanceReads = m_pcDistance->GetReadingsMap();
+  std_msgs::Float32MultiArray distance;
+  for (auto const& x : distanceReads)
+  {
+      //distance.data.push_back(x.second);
+  }
+
+  distancePub.publish(distance);
+   */
+
 
   // Wait for any callbacks to be called.
   ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.1));

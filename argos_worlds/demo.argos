@@ -23,6 +23,9 @@
         <footbot_proximity implementation="default" show_rays="true"/>
         <colored_blob_omnidirectional_camera implementation="rot_z_only"
                                              medium="leds" show_rays="true"/>
+        <positioning implementation="default" />
+        <footbot_distance_scanner implementation="rot_z_only"
+                                  show_rays="true" />
       </sensors>
       <!-- After the following number of time steps without receiving a
            commanded velocity, the robots will stop. -->
@@ -105,5 +108,12 @@
   <!-- ****************** -->
   <visualization>
     <qt-opengl lua_editor="false"/>
+    <qt-opengl>
+      <camera>
+        <placements>
+          <placement index="0" position="0,0,8.14689" look_at="0,0,0" up="1,0,0" lens_focal_length="40" />
+        </placements>
+      </camera>
+    </qt-opengl>
   </visualization>
 </argos-configuration>
